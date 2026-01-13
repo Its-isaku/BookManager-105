@@ -8,7 +8,8 @@
 import Foundation
 
 struct Book: Hashable {
-	var tittle: String
+	let id: UUID = UUID()
+	var title: String
 	var author: String
 	var details: String
 	var cover: String

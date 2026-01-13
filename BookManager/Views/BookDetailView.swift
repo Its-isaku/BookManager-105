@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BookDetailView: View {
     // Variables
-	var bookInDetailView: Book
+	@Binding var book: Book
 	
 	// States
 	@State private var showEditSheet: Bool = false
@@ -21,7 +21,7 @@ struct BookDetailView: View {
 				// Book main Info
 				HStack {
 					// Imagea
-					Image(bookInDetailView.cover)
+					Image(book.cover)
 						.resizable()
 						.scaledToFit()
 						.frame(width: 150, height: 200)
@@ -29,11 +29,11 @@ struct BookDetailView: View {
 					
 					VStack(alignment: .leading) {
 						// Title
-						Text(bookInDetailView.tittle)
+						Text(book.title)
 							.font(Font.largeTitle)
 						
 						// Author
-						Text(bookInDetailView.author)
+						Text(book.author)
 							.font(Font.headline)
 							.foregroundStyle(.secondary)
 							.padding(.top, 10)
@@ -44,7 +44,7 @@ struct BookDetailView: View {
 				}
 				
 				// Details
-				Text(bookInDetailView.details)
+				Text(book.details)
 			}
 			.padding(20)
 		}
@@ -60,7 +60,7 @@ struct BookDetailView: View {
 		
 		// Edit book sheet
 		.sheet(isPresented: $showEditSheet) {
-			AddEditView()
+			AddEditView(book: $book)
 		}
     }
 }
