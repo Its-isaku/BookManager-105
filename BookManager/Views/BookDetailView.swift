@@ -38,6 +38,9 @@ struct BookDetailView: View {
 							.foregroundStyle(.secondary)
 							.padding(.top, 10)
 						
+						// Genre
+						CustomCapsule(text: book.genre.rawValue)
+						
 						Spacer()
 					}
 					.padding(.top, 20)
@@ -45,6 +48,30 @@ struct BookDetailView: View {
 				
 				// Details
 				Text(book.details)
+				
+				Text("Review")
+					.font(.title2.bold())
+					.padding(.vertical)
+				
+				Text(book.review)
+					.font(.title3)
+					.padding(.vertical)
+				
+				// show stars depending the rating
+				HStack(spacing: 2) {
+					// show filled stars
+				    ForEach(0..<(book.raiting), id: \.self) { _ in
+				        Image(systemName: "star.fill")
+				            .foregroundColor(.orange)
+				    }
+					
+					// show empty stars
+				    ForEach(0..<(max(0, 5 - book.raiting)), id: \.self) { _ in
+				        Image(systemName: "star")
+				            .foregroundColor(.orange)
+				    }
+				}
+//				Text("\(book.raiting) \(book.raiting == 1 ? "Star" : "Stars")")
 			}
 			.padding(20)
 		}

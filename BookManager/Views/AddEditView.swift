@@ -24,15 +24,35 @@ struct AddEditView: View {
 			Form {
 				Section(header: Text("Book Details")) {
 					TextField("Title", text: $workingBook.title)
+					
 					TextField("Author", text: $workingBook.author)
+					
+					Picker("Genre", selection: $workingBook.genre){
+						ForEach(Genre.allCases, id: \.self) { genre in
+							Text(genre.rawValue).tag(genre)
+						}
+					}
+					
 					TextEditor(text: $workingBook.details)
+						.frame(height: 150)
+					
+				}
+				
+				Section(header: Text("Book Review")) {
+					Picker("Raiting", selection: $workingBook.raiting) {
+						Text("select a raiting").tag(0)
+						ForEach(1...5, id: \.self) {
+							Text("\($0) stars").tag($0)
+						}
+					}
+					TextEditor(text: $workingBook.review)
 						.frame(height: 150)
 					
 				}
 			}
 			
 			// Tittle
-			.navigationTitle(Text("Editing \(book.title)"))
+			.navigationTitle(book.title.isEmpty ? "Add Book" : "Edit \(book.title)")
 			
 			// Toolbar
 			.toolbar {
@@ -42,6 +62,8 @@ struct AddEditView: View {
 						book.title = workingBook.title
 						book.author = workingBook.author
 						book.details = workingBook.details
+						book.review = workingBook.review
+						book.raiting = workingBook.raiting
 						dismiss()
 					} label: {
 						Image(systemName: "checkmark")
@@ -60,3 +82,4 @@ struct AddEditView: View {
 		
 	}
 }
+

@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
 	// Variables
 	@State var books = getBooks()
-	@State var book: Book = Book(title: "", author: "", details: "", cover: "")
+	@State var book: Book = Book(title: "", author: "", details: "", cover: "", review: "", raiting: 1)
 	
 	// States
 	@State private var showBookSheet: Bool = false
@@ -21,16 +21,11 @@ struct ContentView: View {
 			List($books, id: \.self.id) {$book in
 				// Navigation to Book
 				NavigationLink(destination: BookDetailView(book: $book)) {
-					HStack {
-						Image(book.cover)
-							.resizable()
-							.scaledToFit()
-							.frame(maxWidth: 60, maxHeight: 60)
-						
-						Text ("\(book.title)")
-					}
+					// Book List Item
+					BookListItem(book: book)
 				}
 			}
+			
 			// Toolbar
 			.toolbar {
 				ToolbarItem(placement: .topBarTrailing) {
@@ -45,7 +40,7 @@ struct ContentView: View {
 				if (!book.title.isEmpty) {
 					books.append(book)
 				}
-				book = Book(title: "", author: "", details: "", cover: "")
+				book = Book(title: "", author: "", details: "", cover: "", review: "", raiting: 1)
 			}
 			content: {
 				AddEditView(book: $book)
