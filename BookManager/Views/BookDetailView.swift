@@ -36,10 +36,14 @@ struct BookDetailView: View {
 						Text(book.author)
 							.font(Font.headline)
 							.foregroundStyle(.secondary)
-							.padding(.top, 10)
-						
-						// Genre
-						CustomCapsule(text: book.genre.rawValue)
+							.padding(.top, 5)
+						HStack(spacing: 10) {
+							// Genre
+							CustomCapsule(text: book.genre.rawValue, color: .blue)
+
+							// Reading Status
+							CustomCapsule(text: book.readingStatus.rawValue, color: .red)
+						}
 						
 						Spacer()
 					}
@@ -49,29 +53,25 @@ struct BookDetailView: View {
 				// Details
 				Text(book.details)
 				
-				Text("Review")
-					.font(.title2.bold())
-					.padding(.vertical)
+				HStack(spacing: 10){
+					Text("Review")
+						.font(.title2.bold())
+						.padding(.vertical, 2)
+					
+					// show stars depending the rating
+					HStack(spacing: 2) {
+						ForEach(0..<5, id: \.self) { star in
+							Image(systemName: star < book.rating ? "star.fill" : "star")
+								.foregroundColor(Color.yellow)
+						}
+					}
+				}
+				
 				
 				Text(book.review)
-					.font(.title3)
+					.font(.subheadline)
 					.padding(.vertical)
 				
-				// show stars depending the rating
-				HStack(spacing: 2) {
-					// show filled stars
-				    ForEach(0..<(book.raiting), id: \.self) { _ in
-				        Image(systemName: "star.fill")
-				            .foregroundColor(.orange)
-				    }
-					
-					// show empty stars
-				    ForEach(0..<(max(0, 5 - book.raiting)), id: \.self) { _ in
-				        Image(systemName: "star")
-				            .foregroundColor(.orange)
-				    }
-				}
-//				Text("\(book.raiting) \(book.raiting == 1 ? "Star" : "Stars")")
 			}
 			.padding(20)
 		}
@@ -91,3 +91,4 @@ struct BookDetailView: View {
 		}
     }
 }
+

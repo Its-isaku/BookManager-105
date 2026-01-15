@@ -14,6 +14,7 @@ struct Book: Hashable {
 	var details: String
 	var cover: String
 	var review: String
-	var raiting: Int
+	var rating: Int
 	var genre: Genre = .unknown
+	var readingStatus: ReadingStatus = .unknown
 }

@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
 	// Variables
 	@State var books = getBooks()
-	@State var book: Book = Book(title: "", author: "", details: "", cover: "", review: "", raiting: 1)
+	@State var book: Book = Book(title: "", author: "", details: "", cover: "", review: "", rating: 1)
 	
 	// States
 	@State private var showBookSheet: Bool = false
@@ -40,7 +40,7 @@ struct ContentView: View {
 				if (!book.title.isEmpty) {
 					books.append(book)
 				}
-				book = Book(title: "", author: "", details: "", cover: "", review: "", raiting: 1)
+				book = Book(title: "", author: "", details: "", cover: "", review: "", rating: 1)
 			}
 			content: {
 				AddEditView(book: $book)

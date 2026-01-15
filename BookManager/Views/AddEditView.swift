@@ -33,18 +33,23 @@ struct AddEditView: View {
 						}
 					}
 					
+					Picker("Reading Status", selection: $workingBook.readingStatus){
+						ForEach(ReadingStatus.allCases, id: \.self) { status in
+							Text(status.rawValue).tag(status)
+						}
+					}
+					
+					
+					
 					TextEditor(text: $workingBook.details)
 						.frame(height: 150)
 					
 				}
 				
-				Section(header: Text("Book Review")) {
-					Picker("Raiting", selection: $workingBook.raiting) {
-						Text("select a raiting").tag(0)
-						ForEach(1...5, id: \.self) {
-							Text("\($0) stars").tag($0)
-						}
-					}
+				Section(header: Text("Ratings & Review")) {
+					
+					StarRatingView(rating: $workingBook.rating)
+					
 					TextEditor(text: $workingBook.review)
 						.frame(height: 150)
 					
@@ -63,7 +68,9 @@ struct AddEditView: View {
 						book.author = workingBook.author
 						book.details = workingBook.details
 						book.review = workingBook.review
-						book.raiting = workingBook.raiting
+						book.rating = workingBook.rating
+						book.genre = workingBook.genre
+						book.readingStatus = workingBook.readingStatus
 						dismiss()
 					} label: {
 						Image(systemName: "checkmark")

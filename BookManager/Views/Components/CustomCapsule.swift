@@ -10,7 +10,7 @@ import SwiftUI
 struct CustomCapsule: View {
     
 	let text: String
-	let color: Color = .accentColor
+	var color: Color = .accentColor
 	
 	var body: some View {
         Text(text)
