@@ -65,6 +65,12 @@ struct BookDetailView: View {
 								.foregroundColor(Color.yellow)
 						}
 					}
+					
+					Spacer()
+					
+					// Add to favorite Toggle
+					FavoriteToggle(isFavorite: $book.isFavorite)
+					
 				}
 				
 				

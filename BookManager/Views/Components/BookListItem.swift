@@ -20,6 +20,10 @@ struct BookListItem: View {
 				.frame(maxWidth: 60, maxHeight: 60)
 			
 			Text ("\(book.title)")
+			
+			Spacer()
+			
+			Text(book.isFavorite ? "❤️" : "")
 		}
 		
     }

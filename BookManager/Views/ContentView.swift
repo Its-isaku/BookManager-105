@@ -10,41 +10,20 @@ import SwiftUI
 struct ContentView: View {
 	// Variables
 	@State var books = getBooks()
-	@State var book: Book = Book(title: "", author: "", details: "", cover: "", review: "", rating: 1)
-	
-	// States
-	@State private var showBookSheet: Bool = false
 	
     var body: some View {
-		NavigationStack {
-			// Books List
-			List($books, id: \.self.id) {$book in
-				// Navigation to Book
-				NavigationLink(destination: BookDetailView(book: $book)) {
-					// Book List Item
-					BookListItem(book: book)
-				}
+		TabView {
+			
+			BookListView(books: $books)
+			.tabItem {
+				Label("Books", systemImage: "books.vertical.fill")
 			}
 			
-			// Toolbar
-			.toolbar {
-				ToolbarItem(placement: .topBarTrailing) {
-					Button(action: { showBookSheet.toggle() }) {
-						Image(systemName: "plus")
-					}
+			// Favorites View
+			FavoritesView(books: $books)
+				.tabItem {
+					Label("Favorites", systemImage: "heart.fill")
 				}
-			}
-			
-			// Edit book sheet
-			.sheet(isPresented: $showBookSheet) {
-				if (!book.title.isEmpty) {
-					books.append(book)
-				}
-				book = Book(title: "", author: "", details: "", cover: "", review: "", rating: 1)
-			}
-			content: {
-				AddEditView(book: $book)
-			}
 		}
     }
 }
