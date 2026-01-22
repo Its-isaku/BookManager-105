@@ -10,12 +10,20 @@ import SwiftUI
 struct FavoritesView: View {
 	
 	@Binding var books: [Book]
+	@State private var showFilterSheet: Bool = false
+	@State var selectedGenre: Genre? = nil
+	@State var selectedReadingStatus: ReadingStatus? = nil
 
 	let layout = [GridItem(.flexible()), GridItem(.flexible())]
 	
 	// computed property: bindings to favorite books
 	private var favoriteBooks: [Binding<Book>] {
-		$books.filter { $0.wrappedValue.isFavorite }
+		$books.filter {
+			let value = $0.wrappedValue
+			return value.isFavorite
+			&& (selectedGenre == nil || value.genre == selectedGenre)
+			&& (selectedReadingStatus == nil || value.readingStatus == selectedReadingStatus)
+		}
 	}
 	
     var body: some View {
@@ -30,6 +38,20 @@ struct FavoritesView: View {
 					}
 				}
 				.padding()
+			}
+			.navigationTitle("My Favorite Books")
+			.toolbar {
+				ToolbarItem(placement: .topBarLeading) {
+					Button (action: {showFilterSheet.toggle()}) {
+						Image(systemName: "line.horizontal.3.decrease.circle")
+					}
+				}
+			}
+			.sheet(isPresented: $showFilterSheet) {
+				FilterView(
+					selectedGenre: $selectedGenre,
+					selectedReadingStatus: $selectedReadingStatus
+				)
 			}
 		}
 	}

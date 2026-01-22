@@ -14,6 +14,7 @@ struct BookListView: View {
 	
 	// States
 	@State private var showBookSheet: Bool = false
+	@State private var showFilterSheet: Bool = false
 	
 	// View
     var body: some View {
@@ -27,6 +28,7 @@ struct BookListView: View {
 					BookListItem(book: book)
 				}
 			}
+			.navigationTitle("Books List")
 			
 			// Toolbar
 			.toolbar {
@@ -37,7 +39,7 @@ struct BookListView: View {
 				}
 			}
 			
-			// Edit book sheet
+			// Add/Edit book sheet
 			.sheet(isPresented: $showBookSheet) {
 				if (!book.title.isEmpty) {
 					books.append(book)
