@@ -6,3 +6,24 @@
 //
 
 import Foundation
+import SwiftUI
+
+enum Theme: String, CaseIterable {
+	case ligth
+	case dark
+	case system
+
+	// MARK: - Computed PRoperties
+	var colorScheme: ColorScheme? {
+		switch(self) {
+		case .dark:
+			return ColorScheme.dark
+			
+		case .ligth:
+			return ColorScheme.light
+			
+		case .system:
+			return nil
+		}
+	}
+}

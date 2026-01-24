@@ -13,8 +13,12 @@ struct FavoritesView: View {
 	@State private var showFilterSheet: Bool = false
 	@State var selectedGenre: Genre? = nil
 	@State var selectedReadingStatus: ReadingStatus? = nil
+	
+	@AppStorage(FAVORITE_GRID_COLUMNS_KEY) var numberOfColumns: Int = FAVORITE_GRID_COLUMNS_KEY_DEFAULT
 
-	let layout = [GridItem(.flexible()), GridItem(.flexible())]
+	private var layout: [GridItem] {
+		Array(repeating: GridItem(.flexible()), count: numberOfColumns)
+	}
 	
 	// computed property: bindings to favorite books
 	private var favoriteBooks: [Binding<Book>] {

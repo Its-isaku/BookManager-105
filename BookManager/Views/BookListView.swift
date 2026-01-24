@@ -10,6 +10,7 @@ import SwiftUI
 struct BookListView: View {
 	// Variables
 	@Binding var books: [Book]
+	@State var bookViewModel: BookViewModel
 	@State var book: Book = Book(title: "", author: "", details: "", cover: "", review: "", rating: 1)
 	
 	// States
@@ -42,7 +43,7 @@ struct BookListView: View {
 			// Add/Edit book sheet
 			.sheet(isPresented: $showBookSheet) {
 				if (!book.title.isEmpty) {
-					books.append(book)
+					bookViewModel.addBook(book)
 				}
 				book = Book(title: "", author: "", details: "", cover: "", review: "", rating: 1)
 			}

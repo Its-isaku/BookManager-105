@@ -5,14 +5,40 @@
 //  Created by Isai Magdaleno Almeraz Landeros on 24/01/26.
 //
 
-import SwiftUI
+import Foundation
+import Combine
 
-struct BookViewModel: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
-
-#Preview {
-    BookViewModel()
+// UserDefaults = persistant storage (Key:Value) -> String only
+class BookViewModel: ObservableObject {
+	@Published var books: [Book] = [] {
+		didSet {
+			saveBooks()
+		}
+	}
+	
+	private let booksKey = "BOOKS_KEY"
+	
+	init() {
+		loadBooks()
+		if books.isEmpty {
+			books = getBooks()
+		}
+	}
+	
+	func addBook(_ book: Book) {
+		books.append(book)
+	}
+	
+	private func loadBooks() {
+		if let savedBookData = UserDefaults.standard.data(forKey: booksKey),
+		let savedDecodedBooks = try? JSONDecoder().decode([Book].self, from: savedBookData) {
+			books = savedDecodedBooks
+		}
+	}
+	
+	private func saveBooks() {
+		if let encoded = try? JSONEncoder().encode(books) {
+			UserDefaults.standard.set(encoded, forKey: self.booksKey)
+		}
+	}
 }
