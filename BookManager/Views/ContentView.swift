@@ -11,21 +11,20 @@ struct ContentView: View {
 	// Variables
 	@AppStorage(SETTINGS_THEME_KEY) var theme: Theme = DEFFAULT_SETTINGS_THEME_VALUE
 	
-	@ObservedObject var booksManager = BookViewModel()
 	
     var body: some View {
 		TabView {
 			
-			BookListView(books: $booksManager.books, bookViewModel: booksManager) 
+			BookListView()
 			.tabItem {
 				Label("Books", systemImage: "books.vertical.fill")
 			}
 			
 			// Favorites View
-			FavoritesView(books: $booksManager.books)
-				.tabItem {
-					Label("Favorites", systemImage: "heart.fill")
-				}
+//			FavoritesView()
+//				.tabItem {
+//					Label("Favorites", systemImage: "heart.fill")
+//				}
 			
 			// Settings View
 			SettingsView()

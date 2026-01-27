@@ -9,17 +9,17 @@ import Foundation
 import SwiftUI
 
 enum Theme: String, CaseIterable {
-	case ligth
+	case light
 	case dark
 	case system
 
-	// MARK: - Computed PRoperties
+	// MARK: - Computed Properties
 	var colorScheme: ColorScheme? {
 		switch(self) {
 		case .dark:
 			return ColorScheme.dark
 			
-		case .ligth:
+		case .light:
 			return ColorScheme.light
 			
 		case .system:

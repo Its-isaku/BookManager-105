@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct BookListView: View {
 	// Variables
-	@Binding var books: [Book]
-	@State var bookViewModel: BookViewModel
+	@Query var books: [PersistantBooks]
+//	@State var bookViewModel: BookViewModel
 	@State var book: Book = Book(title: "", author: "", details: "", cover: "", review: "", rating: 1)
 	
 	// States
@@ -22,9 +23,9 @@ struct BookListView: View {
 		// Book List
 		NavigationStack {
 			// Books list List
-			List($books, id: \.self.id) {$book in
+			List(books, id: \.self.id) {book in
 				// Navigation to Book
-				NavigationLink(destination: BookDetailView(book: $book)) {
+				NavigationLink(destination: BookDetailView(book: book, showEditSheet: false, isFavourite: book.isFavorite)) {
 					// Book List Item
 					BookListItem(book: book)
 				}
@@ -40,16 +41,12 @@ struct BookListView: View {
 				}
 			}
 			
-			// Add/Edit book sheet
-			.sheet(isPresented: $showBookSheet) {
-				if (!book.title.isEmpty) {
-					bookViewModel.addBook(book)
-				}
-				book = Book(title: "", author: "", details: "", cover: "", review: "", rating: 1)
-			}
+//			 Add/Edit book sheet
+			.sheet(isPresented: $showBookSheet) { }
 			content: {
-				AddEditView(book: $book)
+				AddEditView()
 			}
 		}
     }
 }
+

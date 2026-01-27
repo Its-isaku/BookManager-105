@@ -6,13 +6,22 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct BookDetailView: View {
     // Variables
-	@Binding var book: Book
+	var book: PersistantBooks
 	
 	// States
 	@State private var showEditSheet: Bool = false
+	@State private var isFavorite: Bool
+	@Environment(\.modelContext) private var modelContext
+	
+	init(book: PersistantBooks, showEditSheet: Bool, isFavourite: Bool) {
+		self.book = book
+		self.showEditSheet = showEditSheet
+		self.isFavorite = isFavourite
+	}
 	
 	var body: some View {
 		
@@ -20,12 +29,12 @@ struct BookDetailView: View {
 			VStack(alignment: .leading) {
 				// Book main Info
 				HStack {
-					// Imagea
-					Image(book.cover)
-						.resizable()
-						.scaledToFit()
-						.frame(width: 150, height: 200)
-						.padding(.vertical, 20)
+					// Image
+//					Image(book.cover)
+//						.resizable()
+//						.scaledToFit()
+//						.frame(width: 150, height: 200)
+//						.padding(.vertical, 20)
 					
 					VStack(alignment: .leading) {
 						// Title
@@ -69,7 +78,15 @@ struct BookDetailView: View {
 					Spacer()
 					
 					// Add to favorite Toggle
-					FavoriteToggle(isFavorite: $book.isFavorite)
+					FavoriteToggle(isFavorite: $isFavorite)
+						.onChange(of: isFavorite) {
+							book.isFavorite = isFavorite
+							do {
+								try modelContext.save()
+							} catch {
+								print("Failed to save favorite change: \(error)")
+							}
+						}
 					
 				}
 				
@@ -93,7 +110,7 @@ struct BookDetailView: View {
 		
 		// Edit book sheet
 		.sheet(isPresented: $showEditSheet) {
-			AddEditView(book: $book)
+			AddEditView(book: book)
 		}
     }
 }
