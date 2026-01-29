@@ -6,13 +6,35 @@
 //
 
 import SwiftUI
+import PhotosUI
+import SwiftData
 
 struct ImagePicker: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
+	
+	@Binding var image: UIImage?
+	@State private var photosPickerItem: PhotosPickerItem?
+	
+	var body: some View {
+		PhotosPicker(
+			selection: $photosPickerItem,
+			matching: .images,
+			photoLibrary: .shared()
+		) {
+			Image(uiImage: image ?? UIImage(resource: .lotrFellowship))
+				.resizable()
+				.aspectRatio(contentMode: .fill)
+				.frame(width: 100, height: 100)
+		}
+		.onChange(of: photosPickerItem) {
+			Task {
+				if let photosPickerItem,
+				   let imageData = try? await photosPickerItem.loadTransferable(type: Data.self) {
+					if let image = UIImage(data: imageData) {
+						self.image = image
+					}
+				}
+			}
+		}
+	}
 }
 
-#Preview {
-    ImagePicker()
-}

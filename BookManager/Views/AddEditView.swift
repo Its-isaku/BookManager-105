@@ -22,6 +22,7 @@ struct AddEditView: View {
 	@State private var details: String = ""
 	@State private var rating: Int = 0
 	@State private var review: String = ""
+	@State private var coverUI: UIImage?
 
 	init(book: PersistantBooks? = nil) {
 		self.book = book
@@ -34,6 +35,9 @@ struct AddEditView: View {
 			_details = State(initialValue: book.details)
 			_rating = State(initialValue: book.rating)
 			_review = State(initialValue: book.review)
+			if let coverData = book.cover {
+				self.coverUI = UIImage(data: coverData)
+			}
 		} else {
 			// default values
 			_title = State(initialValue: "")
@@ -43,12 +47,17 @@ struct AddEditView: View {
 			_details = State(initialValue: "")
 			_rating = State(initialValue: 0)
 			_review = State(initialValue: "")
+			self.coverUI = nil
 		}
 	}
 	
 	var body: some View {
 		NavigationStack {
 			Form {
+				Section(header: Text("Book Cover")) {
+					ImagePicker(image: $coverUI)
+				}
+				
 				Section(header: Text("Book Details")) {
 					TextField("Title", text: $title)
 					
@@ -101,6 +110,10 @@ struct AddEditView: View {
 						bookToSave.rating = rating
 						bookToSave.genre = genre
 						bookToSave.readingStatus = readingStatus
+						
+						if (coverUI != nil) {
+							bookToSave.cover = coverUI?.jpegData(compressionQuality: 0.8)
+						}
 						
 						if isNewBook { modelContext.insert(bookToSave) }
 						do { try modelContext.save() } catch { print("Failed to save book: \(error)") }

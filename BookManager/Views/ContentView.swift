@@ -20,11 +20,11 @@ struct ContentView: View {
 				Label("Books", systemImage: "books.vertical.fill")
 			}
 			
-			// Favorites View
-//			FavoritesView()
-//				.tabItem {
-//					Label("Favorites", systemImage: "heart.fill")
-//				}
+//			 Favorites View
+			FavoritesView()
+				.tabItem {
+					Label("Favorites", systemImage: "heart.fill")
+				}
 			
 			// Settings View
 			SettingsView()

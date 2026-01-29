@@ -14,10 +14,10 @@ struct BookListItem: View {
 		
 		// Book List Structure
 		HStack {
-//			Image(book.cover)
-//				.resizable()
-//				.scaledToFit()
-//				.frame(maxWidth: 60, maxHeight: 60)
+			Image(uiImage: book.cover != nil ? UIImage(data: book.cover!)! : UIImage(resource: .lotrFellowship))
+				.resizable()
+				.scaledToFit()
+				.frame(maxWidth: 60, maxHeight: 60)
 			
 			Text ("\(book.title)")
 			

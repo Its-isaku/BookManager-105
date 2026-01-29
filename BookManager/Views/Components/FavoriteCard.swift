@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct FavoriteCard: View {
-	let book: Book
+	let book: PersistantBooks
 	
 	var body: some View {
 		GeometryReader { geometry in
 			ZStack {
-				Image(book.cover)
+				Image(uiImage: book.cover != nil ? UIImage(data: book.cover!)! : UIImage(resource: .lotrFellowship))
 					.resizable()
 					.scaledToFill()
 					.frame(width: geometry.size.width, height: geometry.size.height)

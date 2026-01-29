@@ -11,7 +11,6 @@ import SwiftData
 struct BookListView: View {
 	// Variables
 	@Query var books: [PersistantBooks]
-//	@State var bookViewModel: BookViewModel
 	@State var book: Book = Book(title: "", author: "", details: "", cover: "", review: "", rating: 1)
 	
 	// States
@@ -23,9 +22,9 @@ struct BookListView: View {
 		// Book List
 		NavigationStack {
 			// Books list List
-			List(books, id: \.self.id) {book in
+			List(books, id: \.id) { book in
 				// Navigation to Book
-				NavigationLink(destination: BookDetailView(book: book, showEditSheet: false, isFavourite: book.isFavorite)) {
+				NavigationLink(destination: BookDetailView(book: book)) {
 					// Book List Item
 					BookListItem(book: book)
 				}
@@ -42,8 +41,7 @@ struct BookListView: View {
 			}
 			
 //			 Add/Edit book sheet
-			.sheet(isPresented: $showBookSheet) { }
-			content: {
+			.sheet(isPresented: $showBookSheet) {
 				AddEditView()
 			}
 		}

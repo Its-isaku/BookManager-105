@@ -17,10 +17,9 @@ struct BookDetailView: View {
 	@State private var isFavorite: Bool
 	@Environment(\.modelContext) private var modelContext
 	
-	init(book: PersistantBooks, showEditSheet: Bool, isFavourite: Bool) {
+	init(book: PersistantBooks) {
 		self.book = book
-		self.showEditSheet = showEditSheet
-		self.isFavorite = isFavourite
+		self.isFavorite = book.isFavorite
 	}
 	
 	var body: some View {
@@ -30,11 +29,11 @@ struct BookDetailView: View {
 				// Book main Info
 				HStack {
 					// Image
-//					Image(book.cover)
-//						.resizable()
-//						.scaledToFit()
-//						.frame(width: 150, height: 200)
-//						.padding(.vertical, 20)
+					Image(uiImage: book.cover != nil ? UIImage(data: book.cover!)! : UIImage(resource: .lotrFellowship))
+						.resizable()
+						.scaledToFit()
+						.frame(width: 150, height: 200)
+						.padding(.vertical, 20)
 					
 					VStack(alignment: .leading) {
 						// Title
