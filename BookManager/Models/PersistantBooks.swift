@@ -21,7 +21,17 @@ class PersistantBooks {
 	var readingStatus: ReadingStatus = ReadingStatus.unknown
 	var isFavorite: Bool = false
 	
-	init(title: String, author: String = "", details: String = "", cover: Data? = nil, review: String = "", rating: Int = 0, genre: Genre = .unknown, readingStatus: ReadingStatus = .unknown, isFavorite: Bool = false) {
+	init(
+		title: String,
+		author: String = "",
+		details: String = "",
+		cover: Data? = nil,
+		review: String = "",
+		rating: Int = 0,
+		genre: Genre = .unknown,
+		readingStatus: ReadingStatus = .unknown,
+		isFavorite: Bool = false
+	) {
 		self.title = title
 		self.author = author
 		self.details = details

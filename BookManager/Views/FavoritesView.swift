@@ -23,11 +23,11 @@ struct FavoritesView: View {
 	
 	// computed property: bindings to favorite books
 	private var favoriteBooks: [PersistantBooks] {
-		books.filter { book in
-			return book.isFavorite
-			&& (selectedGenre == nil || book.genre == selectedGenre)
-			&& (selectedReadingStatus == nil || book.readingStatus == selectedReadingStatus)
-		}
+		filterFavoriteBooks(
+			books: books,
+			selectedGenre: selectedGenre,
+			selectedReadingStatus: selectedReadingStatus
+		)
 	}
 	
     var body: some View {
@@ -61,3 +61,15 @@ struct FavoritesView: View {
 	}
 }
 
+
+func filterFavoriteBooks(
+	books: [PersistantBooks],
+	selectedGenre: Genre? = nil,
+	selectedReadingStatus: ReadingStatus? = nil
+) -> [PersistantBooks] {
+	books.filter {
+		$0.isFavorite
+		&& ( selectedGenre == nil || $0.genre == selectedGenre)
+		&& ( selectedReadingStatus == nil || $0.readingStatus == selectedReadingStatus)
+	}
+}
