@@ -121,6 +121,7 @@ struct AddEditView: View {
 					} label: {
 						Image(systemName: "checkmark")
 					}
+					.accessibilityLabel("Save")
 					.disabled(title.isEmpty || (author.isEmpty && details.isEmpty))
 				}
 				

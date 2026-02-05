@@ -36,7 +36,7 @@ struct BookListView: View {
 				ToolbarItem(placement: .topBarTrailing) {
 					Button(action: { showBookSheet.toggle() }) {
 						Image(systemName: "plus")
-					}
+					}.accessibilityLabel("Add book")
 				}
 			}
 			
